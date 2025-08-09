@@ -1,110 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuickDrop - Two-Wheeler Delivery</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QCKR - Courier Delivery</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Swiper.js CSS CDN -->
+  <link rel=" mucho://cdnjs.cloudflare.com/ajax/libs/Swiper/10.3.1/swiper-bundle.min.css" rel="stylesheet">
+  <!-- Swiper.js JS CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.3.1/swiper-bundle.min.js"></script>
+  <style>
+    .swiper-slide img {
+      width: 100%;
+      height: 100vh;
+      object-fit: cover;
+    }
+    .swiper-button-next, .swiper-button-prev {
+      color: #ffffff;
+    }
+    .swiper-pagination-bullet {
+      background: #ffffff;
+    }
+  </style>
 </head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="nav-container">
-            <img src="logo.png" alt="QuickDrop Logo" class="logo">
-            <img src="hamburger-black.png" alt="Menu" class="hamburger">
-        </div>
-    </header>
+<body class="font-sans">
+  <!-- Navbar -->
+  <nav class="bg-gray-800 text-white p-4 flex justify-between items-center">
+    <div class="text-3xl font-bold">QCKR</div>
+    <div class="space-x-4">
+      <a href="#home" class="hover:text-gray-300">Home</a>
+      <a href="#services" class="hover:text-gray-300">Services</a>
+      <a href="#about" class="hover:text-gray-300">About</a>
+      <a href="#contact" class="hover:text-gray-300">Contact</a>
+      <a href="#auth" class="hover:text-gray-300">Login/Signup</a>
+    </div>
+  </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>Reliable Goods Transportation Services at Your Preferred Location</h1>
-        <p>Experience efficient & reliable two-wheeler goods transportation service.</p>
-       
+  <!-- Slider Section -->
+  <section id="home">
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="https://images.unsplash.com/photo-1501706366093-3b0a5f24c7d2?fit=crop&w=1920&h=1080" alt="Truck 1">
+          <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <h2 class="text-white text-4xl font-bold">Fast & Reliable Courier Delivery</h2>
+          </div>
         </div>
-    </section>
+        <div class="swiper-slide">
+          <img src="https://images.unsplash.com/photo-1527673318156-0bd9f2e058e0?fit=crop&w=1920&h=1080" alt="Mini Truck 1">
+          <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <h2 class="text-white text-4xl font-bold">Nationwide Mini Truck Delivery</h2>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <img src="https://images.unsplash.com/photo-1583336663277-620f4053ce99?fit=crop&w=1920&h=1080" alt="Truck 2">
+          <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <h2 class="text-white text-4xl font-bold">On-Time Heavy Duty Transport</h2>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?fit=crop&w=1920&h=1080" alt="Mini Truck 2">
+          <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <h2 class="text-white text-4xl font-bold">Express Parcel Delivery</h2>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <img src="https://images.unsplash.com/photo-1516305590697-542cb660ef7e?fit=crop&w=1920&h=1080" alt="Truck 3">
+          <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <h2 class="text-white text-4xl font-bold">Safe & Secure Logistics</h2>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?fit=crop&w=1920&h=1080" alt="Mini Truck 3">
+          <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <h2 class="text-white text-4xl font-bold">Local Delivery Solutions</h2>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <img src="https://images.unsplash.com/photo-1527673318156-0bd9f2e058e0?fit=crop&w=1920&h=1080" alt="Truck 4">
+          <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <h2 class="text-white text-4xl font-bold">Affordable Courier Services</h2>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <img src="https://images.unsplash.com/photo-1501706366093-3b0a5f24c7d2?fit=crop&w=1920&h=1080" alt="Mini Truck 4">
+          <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <h2 class="text-white text-4xl font-bold">Trusted Delivery Partners</h2>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <img src="https://images.unsplash.com/photo-1583336663277-620f4053ce99?fit=crop&w=1920&h=1080" alt="Truck 5">
+          <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <h2 class="text-white text-4xl font-bold">24/7 Delivery Support</h2>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <img src="https://images.unsplash.com/photo-1516305590697-542cb660ef7e?fit=crop&w=1920&h=1080" alt="Mini Truck 5">
+          <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <h2 class="text-white text-4xl font-bold">Your Courier, Our Priority</h2>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </section>
 
-    <!-- Banner Section -->
-    <section class="banner">
-        <img src="banner.png" alt="Delivery Banner" class="banner-img">
-    </section>
+  <!-- Services Section -->
+  <section id="services" class="py-16 bg-gray-100 text-center">
+    <h2 class="text-3xl font-bold mb-8">Our Services</h2>
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h3 class="text-xl font-semibold mb-4">Express Delivery</h3>
+        <p>Fast and reliable same-day delivery for urgent parcels.</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h3 class="text-xl font-semibold mb-4">Nationwide Shipping</h3>
+        <p>Deliver across the country with our fleet of trucks.</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h3 class="text-xl font-semibold mb-4">Local Courier</h3>
+        <p>Efficient mini-truck deliveries within your city.</p>
+      </div>
+    </div>
+  </section>
 
-    <!-- Two-Wheeler Section -->
-    <section class="two-wheeler">
-        <h2>Two-Wheelers from QuickDrop</h2>
-        <div class="vehicle-card">
-            <img src="two-wheeler.png" alt="Two-Wheeler">
-            <h3>2 Wheeler</h3>
-            <div class="vehicle-details">
-                <img src="weight-icon.png" alt="Weight Icon" class="icon">
-                <p>20 kg</p>
-            </div>
-            <p><strong>Starting From ₹48</strong></p>
-            <p>Base fare includes 1.0 km distance & 25 minutes of order time. Pricing may vary based on locality. Road tax, parking fees, etc., may apply.</p>
-            <a href="#" class="know-more">Know More</a>
-        </div>
-    </section>
+  <!-- About Section -->
+  <section id="about" class="py-16 text-center">
+    <h2 class="text-3xl font-bold mb-8">About QCKR</h2>
+    <p class="max-w-3xl mx-auto">QCKR is your trusted courier service provider, offering fast, secure, and affordable delivery solutions. With a fleet of trucks and mini-trucks, we ensure your parcels reach their destination on time, every time.</p>
+  </section>
 
-    <!-- Why Choose Us Section -->
-    <section class="why-choose">
-        <h2>Why Choose QuickDrop Pickup & Delivery Services?</h2>
-        <div class="features">
-            <div class="feature">
-                <h3>Door-to-Door Services</h3>
-                <p>Enjoy on-demand pickup & delivery services at your doorstep.</p>
-            </div>
-            <div class="feature">
-                <h3>Get Instant Deliveries</h3>
-                <p>Send documents, gadgets, or small packages instantly.</p>
-            </div>
-            <div class="feature">
-                <h3>Get Anything Delivered</h3>
-                <p>Send items up to 20 kg anywhere across the city.</p>
-            </div>
-            <div class="feature">
-                <h3>Reliable Consignment Delivery</h3>
-                <p>Book two-wheeler services online for same-day delivery.</p>
-            </div>
-        </div>
-    </section>
+  <!-- Contact Section -->
+  <section id="contact" class="py-16 bg-gray-100 text-center">
+    <h2 class="text-3xl font-bold mb-8">Contact Us</h2>
+    <p class="max-w-3xl mx-auto">Have questions? Reach out to us at <a href="mailto:support@qckr.com" class="text-blue-600">support@qckr.com</a> or call us at +91-123-456-7890.</p>
+  </section>
 
-    <!-- CTA Section -->
-    <section class="cta">
-        <h2>Think Logistics, Think QuickDrop!</h2>
-        <p>Get the QuickDrop mobile app to start booking your orders!</p>
-        <img src="qrcode.png" alt="QR Code" class="qr-code">
-        <p>Scan to download our app!</p>
-        <div class="app-links">
-            <a href="#"><img src="playstore.png" alt="Play Store"></a>
-            <a href="#"><img src="appstore.png" alt="App Store"></a>
-        </div>
-        <p>Trusted by over 1,000,000+ customers!</p>
-    </section>
+  <!-- Authentication Section -->
+  <section id="auth" class="py-16 text-center">
+    <h2 class="text-3xl font-bold mb-8">Login / Signup</h2>
+    <div class="max-w-md mx-auto">
+      <input type="text" placeholder="Email" class="w-full p-2 mb-4 border rounded">
+      <input type="password" placeholder="Password" class="w-full p-2 mb-4 border rounded">
+      <button class="bg-blue-600 text-white p-2 rounded w-full hover:bg-blue-700">Login</button>
+      <p class="mt-4">Don't have an account? <a href="#" class="text-blue-600">Sign up</a></p>
+    </div>
+  </section>
 
-    <!-- FAQ Section -->
-    <section class="faq">
-        <h2>Frequently Asked Questions</h2>
-        <div class="faq-item">
-            <h3>What types of items can I send through delivery services?<span class="toggle-icon">+</span></h3>
-            <p class="faq-answer">You can send items like food boxes, gifts, groceries, or small accessories via our two-wheeler services.</p>
-        </div>
-        <div class="faq-item">
-            <h3>Can I schedule a specific delivery time for my consignment?<span class="toggle-icon">+</span></h3>
-            <p class="faq-answer">Yes, book anytime via our app by entering the pickup and drop-off addresses and item details.</p>
-        </div>
-        <div class="faq-item">
-            <h3>What should I do if my consignment is delayed or lost?<span class="toggle-icon">+</span></h3>
-            <p class="faq-answer">Contact our customer support team, and we’ll address your concerns promptly.</p>
-        </div>
-        <div class="faq-item">
-            <h3>How do I request proof of delivery for my items?<span class="toggle-icon">+</span></h3>
-            <p class="faq-answer">You’ll receive a notification once your items are delivered successfully.</p>
-        </div>
-    </section>
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white p-4 text-center">
+    <p>&copy; 2025 QCKR. All rights reserved.</p>
+  </footer>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 QuickDrop. All rights reserved.</p>
-    </footer>
+  <!-- JavaScript for Location Permission and Swiper -->
+  <script>
+    // Initialize Swiper
+    const swiper = new Swiper('.mySwiper', {
+      loop: true,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+    });
+
+    // Request location permission on page load
+    window.onload = function() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            alert(`Location accessed: Latitude ${latitude}, Longitude ${longitude}`);
+            // You can use the location data for further functionality
+          },
+          (error) => {
+            alert('Location access denied or unavailable.');
+            console.error('Error getting location:', error);
+          }
+        );
+      } else {
+        alert('Geolocation is not supported by your browser.');
+      }
+    };
+  </script>
 </body>
 </html>
