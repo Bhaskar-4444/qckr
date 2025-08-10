@@ -96,19 +96,29 @@
       }
     }
 
-    // Mock function to calculate road distance (replace with real API in production)
+    // Mock function to calculate road distance (improved for nearby locations)
     async function calculateRoadDistance(pickup, drop) {
-      // Simulate API call with a delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      // Mock distance: same address returns 0, else random 10-50 km
-      return pickup === drop ? 0 : Math.floor(Math.random() * 41) + 10;
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API delay
+      if (pickup === drop) return 0;
+
+      // Simple heuristic: if addresses share a common prefix (e.g., same city), assume shorter distance
+      const pickupLower = pickup.toLowerCase();
+      const dropLower = drop.toLowerCase();
+      const commonPrefix = pickupLower.split(' ').filter(word => dropLower.includes(word)).length > 0;
+      
+      if (commonPrefix) {
+        // Nearby locations (same city): 2-15 km
+        return Math.floor(Math.random() * 14) + 2;
+      } else {
+        // Different cities: 20-100 km
+        return Math.floor(Math.random() * 81) + 20;
+      }
     }
 
-    // Mock function to send email (replace with real backend in production)
+    // Mock function to send email to hariom.556879@gmail.com
     async function sendBookingEmail(bookingDetails) {
-      console.log('Sending email with booking details:', bookingDetails);
-      // Simulate email sending
-      await new Promise(resolve => setTimeout(resolve, 500));
+      console.log(`Sending email to hariom.556879@gmail.com with booking details:`, bookingDetails);
+      await new Promise(resolve => setTimeout(resolve, 500)); // Simulate email sending
       return true;
     }
 
@@ -121,6 +131,10 @@
       // Basic validation
       if (!pickup || !drop || !contact) {
         alert('Please fill in all required fields.');
+        return;
+      }
+      if (!/^\d{10}$/.test(contact)) {
+        alert('Please enter a valid 10-digit contact number.');
         return;
       }
       if (selectedVehicle === 'Packers and Movers' && !date) {
@@ -175,9 +189,9 @@
       const emailSent = await sendBookingEmail(bookingDetails);
       if (emailSent) {
         if (selectedVehicle === 'Packers and Movers') {
-          alert(`Booking confirmed for ${selectedVehicle} from ${pickup} to ${drop} on ${date}. Contact: ${contact}. Details sent to contact email.`);
+          alert(`Booking confirmed for ${selectedVehicle} from ${pickup} to ${drop} on ${date}. Contact: ${contact}. Details sent to hariom.556879@gmail.com.`);
         } else {
-          alert(`Booking confirmed for ${selectedVehicle} from ${pickup} to ${drop}. Contact: ${contact}. Details sent to contact email.`);
+          alert(`Booking confirmed for ${selectedVehicle} from ${pickup} to ${drop}. Contact: ${contact}. Details sent to hariom.556879@gmail.com.`);
         }
       } else {
         alert('Failed to send booking details. Please try again.');
