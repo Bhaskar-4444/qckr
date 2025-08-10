@@ -22,6 +22,34 @@
     .swiper-pagination-bullet {
       background: #ffffff;
     }
+    /* Popup Styling */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .popup-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      max-width: 400px;
+      width: 90%;
+      position: relative;
+    }
+    .popup-content .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body class="font-sans">
@@ -33,9 +61,35 @@
       <a href="#services" class="hover:text-gray-300">Services</a>
       <a href="#about" class="hover:text-gray-300">About</a>
       <a href="#contact" class="hover:text-gray-300">Contact</a>
-      <a href="#auth" class="hover:text-gray-300">Login/Signup</a>
+      <a href="#" class="hover:text-gray-300" onclick="showPopup()">Login/Signup</a>
     </div>
   </nav>
+
+  <!-- Popup for Login/Signup -->
+  <div id="auth-popup" class="popup">
+    <div class="popup-content">
+      <span class="close" onclick="closePopup()">&times;</span>
+      <h2 class="text-2xl font-bold mb-4 text-gray-800 text-center">Login / Signup</h2>
+      <div class="flex justify-center mb-4">
+        <button id="show-login" class="bg-blue-600 text-white px-4 py-2 rounded mr-2 hover:bg-blue-700">Login</button>
+        <button id="show-signup" class="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">Signup</button>
+      </div>
+      <!-- Login Form -->
+      <div id="login-form" class="auth-form">
+        <input type="email" name="email" placeholder="Email" class="w-full p-2 mb-4 border rounded" required>
+        <input type="tel" name="phone" placeholder="Phone Number (10 digits)" class="w-full p-2 mb-4 border rounded" pattern="\d{10}" required>
+        <input type="password" name="password" placeholder="Password" class="w-full p-2 mb-4 border rounded" required>
+        <button type="submit" class="bg-blue-600 text-white p-2 rounded w-full hover:bg-blue-700">Login</button>
+      </div>
+      <!-- Signup Form -->
+      <div id="signup-form" class="auth-form hidden">
+        <input type="email" name="email" placeholder="Email" class="w-full p-2 mb-4 border rounded" required>
+        <input type="tel" name="phone" placeholder="Phone Number (10 digits)" class="w-full p-2 mb-4 border rounded" pattern="\d{10}" required>
+        <input type="password" name="password" placeholder="Password" class="w-full p-2 mb-4 border rounded" required>
+        <button type="submit" class="bg-teal-600 text-white p-2 rounded w-full hover:bg-teal-700">Signup</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Slider Section -->
   <section id="home">
@@ -153,7 +207,7 @@
     <p>&copy; 2025 QCKR. All rights reserved.</p>
   </footer>
 
-  <!-- JavaScript for Location Permission, Swiper, and Email Sending -->
+  <!-- JavaScript for Location Permission, Swiper, Popup, and Email Sending -->
   <script>
     // Initialize Swiper
     const swiper = new Swiper('.mySwiper', {
@@ -190,6 +244,28 @@
       }
     };
 
+    // Popup Functions
+    function showPopup() {
+      document.getElementById('auth-popup').style.display = 'flex';
+      document.getElementById('login-form').classList.remove('hidden');
+      document.getElementById('signup-form').classList.add('hidden');
+    }
+
+    function closePopup() {
+      document.getElementById('auth-popup').style.display = 'none';
+    }
+
+    // Toggle between Login and Signup forms
+    document.getElementById('show-login').addEventListener('click', () => {
+      document.getElementById('login-form').classList.remove('hidden');
+      document.getElementById('signup-form').classList.add('hidden');
+    });
+
+    document.getElementById('show-signup').addEventListener('click', () => {
+      document.getElementById('signup-form').classList.remove('hidden');
+      document.getElementById('login-form').classList.add('hidden');
+    });
+
     // Function to send email (client-side simulation, actual implementation requires server-side)
     function sendEmail(action, email, phone, password) {
       const subject = action === 'login' ? 'QCKR Login Attempt' : 'QCKR New Signup';
@@ -216,6 +292,7 @@
         // Simulate sending data to email
         sendEmail(action, email, phone, password);
         alert(`${action.charAt(0).toUpperCase() + action.slice(1)} data sent to email.`);
+        closePopup();
       });
     });
   </script>
