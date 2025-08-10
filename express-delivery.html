@@ -8,7 +8,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="font-sans">
-  <!-- Navbar (unchanged) -->
+  <!-- Navbar -->
   <nav class="bg-gradient-to-r from-blue-600 to-teal-500 text-white p-4 flex justify-between items-center border-b-2 border-blue-400 shadow-md">
     <div class="text-3xl font-bold">QCKR</div>
     <div class="space-x-4">
@@ -20,7 +20,7 @@
     </div>
   </nav>
 
-  <!-- Nationwide Shipping Options Section (unchanged onclick) -->
+  <!-- Nationwide Shipping Options Section -->
   <section class="py-16 bg-gradient-to-r from-blue-100 to-teal-100 text-center border-2 border-blue-400 rounded-lg shadow-md">
     <h2 class="text-3xl font-bold mb-8 text-gray-800">Nationwide Shipping Options</h2>
     <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-6">
@@ -42,7 +42,7 @@
     </div>
   </section>
 
-  <!-- Fare Estimate Section (dynamic title, added date input) -->
+  <!-- Fare Estimate Section -->
   <section id="fareSection" class="py-16 bg-gradient-to-r from-blue-100 to-teal-100 text-center border-2 border-blue-400 rounded-lg shadow-md hidden">
     <h2 id="fareTitle" class="text-3xl font-bold mb-8 text-gray-800">Get Fare Estimate</h2>
     <div class="max-w-md mx-auto">
@@ -62,13 +62,15 @@
         <label for="date" class="block text-gray-800 font-semibold mb-2">Delivery Date <span class="text-red-500">*</span></label>
         <input type="date" id="date" class="w-full p-2 border rounded" min="2025-08-10" value="2025-08-10" required>
       </div>
-      <button id="fareButton" class="bg-blue-600 text-white p-2 rounded w-full hover:bg-blue-700">Get Fare Estimate</button>
+      <div class="flex space-x-4">
+        <button id="fareButton" class="bg-blue-600 text-white p-2 rounded w-1/2 hover:bg-blue-700">Get Fare Estimate</button>
+        <button id="bookButton" class="bg-green-600 text-white p-2 rounded w-1/2 hover:bg-green-700 hidden">Book</button>
+      </div>
       <div id="fareResult" class="mt-4 text-gray-800 font-semibold hidden"></div>
-      <button id="bookButton" class="bg-green-600 text-white p-2 rounded w-full hover:bg-green-700 mt-4 hidden">Book</button>
     </div>
   </section>
 
-  <!-- Footer (unchanged) -->
+  <!-- Footer -->
   <footer class="bg-gradient-to-r from-blue-600 to-teal-500 text-white p-4 text-center border-t-2 border-blue-400 shadow-md">
     <p>&copy; 2025 QCKR. All rights reserved.</p>
   </footer>
@@ -94,7 +96,23 @@
       }
     }
 
-    document.getElementById('fareButton').addEventListener('click', function() {
+    // Mock function to calculate road distance (replace with real API in production)
+    async function calculateRoadDistance(pickup, drop) {
+      // Simulate API call with a delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Mock distance: same address returns 0, else random 10-50 km
+      return pickup === drop ? 0 : Math.floor(Math.random() * 41) + 10;
+    }
+
+    // Mock function to send email (replace with real backend in production)
+    async function sendBookingEmail(bookingDetails) {
+      console.log('Sending email with booking details:', bookingDetails);
+      // Simulate email sending
+      await new Promise(resolve => setTimeout(resolve, 500));
+      return true;
+    }
+
+    document.getElementById('fareButton').addEventListener('click', async function() {
       const pickup = document.getElementById('pickup').value.trim();
       const drop = document.getElementById('drop').value.trim();
       const contact = document.getElementById('contact').value.trim();
@@ -110,8 +128,12 @@
         return;
       }
 
-      // Mock distance calculation (replace with API in production)
-      const distance = pickup === drop ? 10 : Math.floor(Math.random() * 41) + 10; // Random 10-50 km
+      // Calculate road distance
+      const distance = await calculateRoadDistance(pickup, drop);
+      if (distance === 0) {
+        alert('Pickup and drop locations cannot be the same.');
+        return;
+      }
 
       // Fare rates based on vehicle type
       const fareRates = {
@@ -120,7 +142,7 @@
         'Packers and Movers': { base: 200, perKm: 20 }
       };
 
-      const { base, perKm } = fareRates[selectedVehicle] || fareRates['Mini Trucks']; // Default to Mini Trucks
+      const { base, perKm } = fareRates[selectedVehicle] || fareRates['Mini Trucks'];
       const fare = base + (distance * perKm);
 
       // Display fare
@@ -132,15 +154,33 @@
       document.getElementById('bookButton').classList.remove('hidden');
     });
 
-    document.getElementById('bookButton').addEventListener('click', function() {
+    document.getElementById('bookButton').addEventListener('click', async function() {
       const pickup = document.getElementById('pickup').value.trim();
       const drop = document.getElementById('drop').value.trim();
       const contact = document.getElementById('contact').value.trim();
       const date = document.getElementById('date').value;
-      if (selectedVehicle === 'Packers and Movers') {
-        alert(`Booking confirmed for ${selectedVehicle} from ${pickup} to ${drop} on ${date}. Contact: ${contact}`);
+      const fareResult = document.getElementById('fareResult').textContent;
+
+      // Prepare booking details
+      const bookingDetails = {
+        vehicle: selectedVehicle,
+        pickup,
+        drop,
+        contact,
+        date: selectedVehicle === 'Packers and Movers' ? date : 'N/A',
+        fare: fareResult
+      };
+
+      // Send booking details to email
+      const emailSent = await sendBookingEmail(bookingDetails);
+      if (emailSent) {
+        if (selectedVehicle === 'Packers and Movers') {
+          alert(`Booking confirmed for ${selectedVehicle} from ${pickup} to ${drop} on ${date}. Contact: ${contact}. Details sent to contact email.`);
+        } else {
+          alert(`Booking confirmed for ${selectedVehicle} from ${pickup} to ${drop}. Contact: ${contact}. Details sent to contact email.`);
+        }
       } else {
-        alert(`Booking confirmed for ${selectedVehicle} from ${pickup} to ${drop}. Contact: ${contact}`);
+        alert('Failed to send booking details. Please try again.');
       }
     });
   </script>
