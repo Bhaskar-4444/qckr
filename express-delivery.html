@@ -20,21 +20,21 @@
     </div>
   </nav>
 
-  <!-- Express Delivery Options Section (Three-Wheeler removed, grid adjusted) -->
+  <!-- Express Delivery Options Section (added onclick events) -->
   <section class="py-16 bg-gradient-to-r from-blue-100 to-teal-100 text-center border-2 border-blue-400 rounded-lg shadow-md">
     <h2 class="text-3xl font-bold mb-8 text-gray-800">Express Delivery Options</h2>
     <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-6">
-      <div class="bg-blue-50 p-8 rounded-lg shadow-lg border-2 border-blue-400 hover:scale-105 transition-transform">
+      <div class="bg-blue-50 p-8 rounded-lg shadow-lg border-2 border-blue-400 hover:scale-105 transition-transform cursor-pointer" onclick="showFareEstimate('Two-Wheeler')">
         <img src="https://th.bing.com/th/id/OIP.vBDCZpZLZPPpBZM8EhHYVwHaEK?w=316&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3" alt="AI-Generated Two-Wheeler Delivery" class="w-full h-40 object-cover rounded-lg mb-4">
         <h3 class="text-xl font-semibold mb-4 text-gray-800">Two-Wheeler</h3>
         <p class="text-gray-700">Swift delivery for small parcels using motorcycles, perfect for urgent city deliveries.</p>
       </div>
-      <div class="bg-teal-50 p-8 rounded-lg shadow-lg border-2 border-blue-400 hover:scale-105 transition-transform">
+      <div class="bg-teal-50 p-8 rounded-lg shadow-lg border-2 border-blue-400 hover:scale-105 transition-transform cursor-pointer" onclick="showFareEstimate('Mini Trucks')">
         <img src="https://th.bing.com/th/id/OIP.rcr_W3lu4oz2RW9cpnFkDwHaEF?w=315&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="AI-Generated Mini Truck Delivery" class="w-full h-40 object-cover rounded-lg mb-4">
         <h3 class="text-xl font-semibold mb-4 text-gray-800">Mini Trucks</h3>
         <p class="text-gray-700">Compact trucks for medium-sized parcels, ideal for local and regional express deliveries.</p>
       </div>
-      <div class="bg-indigo-50 p-8 rounded-lg shadow-lg border-2 border-blue-400 hover:scale-105 transition-transform">
+      <div class="bg-indigo-50 p-8 rounded-lg shadow-lg border-2 border-blue-400 hover:scale-105 transition-transform cursor-pointer" onclick="showFareEstimate('Packers and Movers')">
         <img src="https://th.bing.com/th/id/OIP.muDe5MYMTNeC7RJGfBVUswHaF6?w=192&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="AI-Generated Packers and Movers" class="w-full h-40 object-cover rounded-lg mb-4">
         <h3 class="text-xl font-semibold mb-4 text-gray-800">Packers and Movers</h3>
         <p class="text-gray-700">Professional moving services for large items and relocations, with secure packing and transport.</p>
@@ -42,9 +42,9 @@
     </div>
   </section>
 
-  <!-- Fare Estimate Section (unchanged) -->
-  <section class="py-16 bg-gradient-to-r from-blue-100 to-teal-100 text-center border-2 border-blue-400 rounded-lg shadow-md">
-    <h2 class="text-3xl font-bold mb-8 text-gray-800">Get Fare Estimate for Mini Trucks</h2>
+  <!-- Fare Estimate Section (hidden by default) -->
+  <section id="fareSection" class="py-16 bg-gradient-to-r from-blue-100 to-teal-100 text-center border-2 border-blue-400 rounded-lg shadow-md hidden">
+    <h2 class="text-3xl font-bold mb-8 text-gray-800">Get Fare Estimate</h2>
     <div class="max-w-md mx-auto">
       <div class="mb-4">
         <label for="pickup" class="block text-gray-800 font-semibold mb-2">Pickup Address <span class="text-red-500">*</span></label>
@@ -69,8 +69,20 @@
     <p>&copy; 2025 QCKR. All rights reserved.</p>
   </footer>
 
-  <!-- JavaScript for Fare Calculation and Booking (unchanged) -->
+  <!-- JavaScript for Fare Calculation and Booking -->
   <script>
+    let selectedVehicle = '';
+
+    function showFareEstimate(vehicle) {
+      selectedVehicle = vehicle;
+      document.getElementById('fareSection').classList.remove('hidden');
+      document.getElementById('fareResult').classList.add('hidden');
+      document.getElementById('bookButton').classList.add('hidden');
+      document.getElementById('pickup').value = '';
+      document.getElementById('drop').value = '';
+      document.getElementById('contact').value = '';
+    }
+
     document.getElementById('fareButton').addEventListener('click', function() {
       const pickup = document.getElementById('pickup').value.trim();
       const drop = document.getElementById('drop').value.trim();
@@ -84,13 +96,20 @@
 
       // Mock distance calculation (replace with API in production)
       const distance = pickup === drop ? 10 : Math.floor(Math.random() * 41) + 10; // Random 10-50 km
-      const baseFare = 50;
-      const perKmRate = 10;
-      const fare = baseFare + (distance * perKmRate);
+
+      // Fare rates based on vehicle type
+      const fareRates = {
+        'Two-Wheeler': { base: 15, perKm: 5 },
+        'Mini Trucks': { base: 50, perKm: 10 },
+        'Packers and Movers': { base: 200, perKm: 20 }
+      };
+
+      const { base, perKm } = fareRates[selectedVehicle] || fareRates['Mini Trucks']; // Default to Mini Trucks
+      const fare = base + (distance * perKm);
 
       // Display fare
       const fareResult = document.getElementById('fareResult');
-      fareResult.textContent = `Estimated Fare: ₹${fare} for ${distance} km (Mini Trucks)`;
+      fareResult.textContent = `Estimated Fare: ₹${fare} for ${distance} km (${selectedVehicle})`;
       fareResult.classList.remove('hidden');
 
       // Show Book button
@@ -101,7 +120,7 @@
       const pickup = document.getElementById('pickup').value.trim();
       const drop = document.getElementById('drop').value.trim();
       const contact = document.getElementById('contact').value.trim();
-      alert(`Booking confirmed for Mini Trucks from ${pickup} to ${drop}. Contact: ${contact}`);
+      alert(`Booking confirmed for ${selectedVehicle} from ${pickup} to ${drop}. Contact: ${contact}`);
     });
   </script>
 </body>
