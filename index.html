@@ -207,7 +207,10 @@
     <p>&copy; 2025 QCKR. All rights reserved.</p>
   </footer>
 
-  <!-- JavaScript for Location Permission, Swiper, Popup, and Email Sending -->
+  <!-- Include Firebase Authentication Script -->
+  <script type="module" src="js/firebase-auth.js"></script>
+
+  <!-- JavaScript for Location Permission, Swiper, Popup, and Firebase Authentication -->
   <script>
     // Initialize Swiper
     const swiper = new Swiper('.mySwiper', {
@@ -266,17 +269,9 @@
       document.getElementById('login-form').classList.add('hidden');
     });
 
-    // Function to send email (client-side simulation, actual implementation requires server-side)
-    function sendEmail(action, email, phone, password) {
-      const subject = action === 'login' ? 'QCKR Login Attempt' : 'QCKR New Signup';
-      const body = `Action: ${action}\nEmail: ${email}\nPhone: ${phone}\nPassword: ${password}`;
-      const mailtoLink = `mailto:hariom.556879@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.location.href = mailtoLink;
-    }
-
-    // Handle Login/Signup form submission
+    // Firebase Authentication Handlers
     document.querySelectorAll('.auth-form').forEach(form => {
-      form.addEventListener('submit', function(e) {
+      form.addEventListener('submit', async function(e) {
         e.preventDefault();
         const email = this.querySelector('input[name="email"]').value;
         const phone = this.querySelector('input[name="phone"]').value;
@@ -289,10 +284,23 @@
           return;
         }
 
-        // Simulate sending data to email
-        sendEmail(action, email, phone, password);
-        alert(`${action.charAt(0).toUpperCase() + action.slice(1)} data sent to email.`);
-        closePopup();
+        try {
+          if (action === 'login') {
+            // Handle Login with Firebase
+            const userCredential = await auth.signInWithEmailAndPassword(email, password);
+            alert(`Login successful! Welcome, ${userCredential.user.email}`);
+          } else {
+            // Handle Signup with Firebase
+            const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+            // Optionally update user profile with phone number
+            await userCredential.user.updateProfile({ displayName: phone });
+            alert(`Signup successful! Welcome, ${userCredential.user.email}`);
+          }
+          closePopup();
+        } catch (error) {
+          console.error('Authentication error:', error);
+          alert(`Error: ${error.message}`);
+        }
       });
     });
   </script>
