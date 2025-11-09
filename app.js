@@ -1,4 +1,4 @@
-/* app.js */
+/* app.js (Updated: Pricing to ₹50, removed search bar, updated policy text) */
 // Navigation History Stack for Back Button
 let navHistory = ['home']; // Initialize with home
 // Update history on navigation
@@ -14,7 +14,7 @@ function goBack() {
   const previousPage = navHistory[navHistory.length - 1] || 'home';
   navigateTo(previousPage);
 }
-// --- Mock Data for Fallback ---
+// --- Mock Data for Fallback (Updated: Prices to 50) ---
 const mockCategories = [
   { id: 'app_elec', name: 'Appliance & Electrical Repair', icon: 'plug', image: 'https://5.imimg.com/data5/JC/HA/YA/SELLER-41468555/electrical-wiring-and-services-500x500.jpeg' },
   { id: 'plumb', name: 'Plumbing & Leaks', icon: 'water', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdhcSc0pPe34I2PMKMuvRTOvelfkm-AI_qyw&s' },
@@ -26,16 +26,16 @@ const mockCategories = [
   { id: 'paint', name: 'House Painting', icon: 'paint', image: 'https://blog.75services.com/wp-content/uploads/2023/09/residential-painting-in-visakhapatnam.jpg' },
 ];
 const mockProviders = [
-  { id: 1, name: 'Electrical Services', categoryId: 'app_elec', price: 80, bio: 'Certified electricians specializing in residential wiring and fault diagnostics across NCR and Delhi.', rating: 4.5, reviews: 120 },
-  { id: 11, name: 'General Mechanics', categoryId: 'app_elec', price: 80, bio: 'Repair of washing machines, refrigerators, and microwaves at home.', rating: 4.2, reviews: 80 },
-  { id: 2, name: 'Plumber Service', categoryId: 'plumb', price: 80, bio: 'Fast, reliable plumbing service for leaks, clogs, and installations. 10 years experience.', rating: 4.7, reviews: 150 },
-  { id: 4, name: 'Cleaning Services', categoryId: 'clean', price: 80, bio: 'Eco-friendly house cleaning services. Weekly, bi-weekly, or deep cleaning options.', rating: 4.8, reviews: 200 },
-  { id: 5, name: 'Pest Control', categoryId: 'pest', price: 80, bio: 'Residential and commercial pest control. Guaranteed removal of all common pests.', rating: 4.3, reviews: 90 },
-  { id: 6, name: 'Carpenter Service', categoryId: 'carp', price: 80, bio: 'Custom carpentry, repairs, and furniture assembly. Serving NCR & Delhi.', rating: 4.6, reviews: 110 },
-  { id: 3, name: 'Haircut', categoryId: 'salon_mass', price: 80, bio: 'Modern and classic haircuts for men and women. Home service available in Rohini Delhi.', rating: 4.9, reviews: 130 },
-  { id: 7, name: 'Therapy', categoryId: 'salon_mass', price: 80, bio: 'Certified therapist offering deep tissue and sports massage for pain relief.', rating: 4.4, reviews: 100 },
-  { id: 9, name: 'AC Experts', categoryId: 'ac', price: 80, bio: 'Specialized AC installation, repair, and maintenance in major cities.', rating: 4.7, reviews: 140 },
-  { id: 10, name: 'Painting Service', categoryId: 'paint', price: 80, bio: 'Professional interior and exterior painting with paints.', rating: 4.5, reviews: 95 },
+  { id: 1, name: 'Electrical Services', categoryId: 'app_elec', price: 50, bio: 'Certified electricians specializing in residential wiring and fault diagnostics across NCR and Delhi.', rating: 4.5, reviews: 120 },
+  { id: 11, name: 'General Mechanics', categoryId: 'app_elec', price: 50, bio: 'Repair of washing machines, refrigerators, and microwaves at home.', rating: 4.2, reviews: 80 },
+  { id: 2, name: 'Plumber Service', categoryId: 'plumb', price: 50, bio: 'Fast, reliable plumbing service for leaks, clogs, and installations. 10 years experience.', rating: 4.7, reviews: 150 },
+  { id: 4, name: 'Cleaning Services', categoryId: 'clean', price: 50, bio: 'Eco-friendly house cleaning services. Weekly, bi-weekly, or deep cleaning options.', rating: 4.8, reviews: 200 },
+  { id: 5, name: 'Pest Control', categoryId: 'pest', price: 50, bio: 'Residential and commercial pest control. Guaranteed removal of all common pests.', rating: 4.3, reviews: 90 },
+  { id: 6, name: 'Carpenter Service', categoryId: 'carp', price: 50, bio: 'Custom carpentry, repairs, and furniture assembly. Serving NCR & Delhi.', rating: 4.6, reviews: 110 },
+  { id: 3, name: 'Haircut', categoryId: 'salon_mass', price: 50, bio: 'Modern and classic haircuts for men and women. Home service available in Rohini Delhi.', rating: 4.9, reviews: 130 },
+  { id: 7, name: 'Therapy', categoryId: 'salon_mass', price: 50, bio: 'Certified therapist offering deep tissue and sports massage for pain relief.', rating: 4.4, reviews: 100 },
+  { id: 9, name: 'AC Experts', categoryId: 'ac', price: 50, bio: 'Specialized AC installation, repair, and maintenance in major cities.', rating: 4.7, reviews: 140 },
+  { id: 10, name: 'Painting Service', categoryId: 'paint', price: 50, bio: 'Professional interior and exterior painting with paints.', rating: 4.5, reviews: 95 },
 ];
 // --- Global State ---
 let appState = {
@@ -54,6 +54,31 @@ let appState = {
   },
   user: null // Populated by Firebase Auth
 };
+
+// Auth State Listener (MOVED HERE: After appState, before other functions)
+window.auth.onAuthStateChanged((user) => {
+  if (user) {
+    appState.isLoggedIn = true;
+    appState.user = {
+      uid: user.uid,
+      name: user.displayName || user.email.split('@')[0],
+      email: user.email,
+      role: 'customer'
+    };
+    console.log("User signed in:", appState.user);
+    if (appState.currentPage === 'login' || appState.currentPage === 'signup') {
+      navigateTo('dashboard');
+    }
+  } else {
+    appState.isLoggedIn = false;
+    appState.user = null;
+    console.log("User signed out");
+    if (appState.currentPage === 'dashboard') {
+      navigateTo('home');
+    }
+  }
+});
+
 // --- Firebase Realtime Database Functions ---
 // Initialize Database with Sample Data (Run ONCE during setup)
 async function initializeDatabase() {
@@ -466,11 +491,7 @@ async function renderHomePage() {
       <div class="max-w-4xl mx-auto text-center relative z-10">
         <h2 class="text-4xl sm:text-5xl font-extrabold mb-4">Find Your Professional Service, Instantly.</h2>
         <p class="text-xl mb-8 opacity-90">Vetted professionals for every home need, from plumbing to therapy, across India.</p>
-        <div class="bg-white p-2 rounded-full shadow-2xl flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3 search-overlay">
-          <input type="text" placeholder="I need a service like 'Plumbing' or 'Cleaning'..." class="flex-grow p-3 sm:py-3 sm:px-5 rounded-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-          <input type="text" placeholder="Enter Location / Pincode" class="flex-grow p-3 sm:py-3 sm:px-5 rounded-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 sm:max-w-xs" />
-          <button onclick="navigateTo('listings')" class="bg-blue-500 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-600 transition duration-300 shadow-lg">Search</button>
-        </div>
+        <button onclick="navigateTo('listings')" class="bg-blue-500 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-600 transition duration-300 shadow-lg">Browse Services</button>
       </div>
     </section>
     <section class="mb-12">
@@ -552,8 +573,8 @@ async function renderListingsPage(categoryId) {
           </div>
           <div>
             <p class="font-medium text-gray-700 mb-2">Price Range</p>
-            <input type="range" min="80" max="500" value="500" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer range-lg">
-            <div class="flex justify-between text-sm text-gray-500 mt-1"><span>₹80</span><span>₹500+</span></div>
+            <input type="range" min="50" max="500" value="500" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer range-lg">
+            <div class="flex justify-between text-sm text-gray-500 mt-1"><span>₹50</span><span>₹500+</span></div>
           </div>
         </div>
       </aside>
@@ -617,14 +638,14 @@ function renderProviderProfile(provider) {
           <ul class="list-disc list-inside space-y-2 text-gray-700 mb-4">
             <li><strong>Visiting Charge:</strong> ₹${provider.price} + problem based charge</li>
             <li><strong>Major Installation:</strong> Custom Quote (Contact for estimate)</li>
-            <li><strong>Emergency Call-out:</strong> ₹80 flat fee + problem based charge</li>
+            <li><strong>Emergency Call-out:</strong> ₹50 flat fee + problem based charge</li>
           </ul>
           <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400">
             <h5 class="font-semibold text-blue-800 mb-2">Visiting Charge Policy</h5>
             <ol class="text-sm text-blue-700 space-y-1 list-decimal list-inside ml-2">
-              <li><strong>Visiting Charge – ₹80:</strong><br>A small visiting fee of ₹80 is applicable for every service request. This covers the technician’s inspection and basic consultation at your location.</li>
-              <li><strong>Adjusted in Final Bill:</strong><br>If the customer decides to proceed with the service or repair, the ₹80 visiting charge will be fully adjusted in the final service amount — meaning, no extra visit fee will be charged.</li>
-              <li><strong>Applicable Only if Work Not Done:</strong><br>If the customer chooses not to continue with the service after inspection, only the ₹80 visiting charge will be applicable as a minimal inspection fee.</li>
+              <li><strong>Fee: ₹50 for every service request.</strong><br>This covers the technician's visit, inspection, and basic consultation.</li>
+              <li><strong>If You Proceed:</strong><br>The ₹50 is fully adjusted in your final bill—no extra charge.</li>
+              <li><strong>If You Don't Proceed:</strong><br>Only the ₹50 inspection fee applies. No further costs.</li>
             </ol>
           </div>
         </div>
@@ -652,7 +673,7 @@ function renderProviderProfile(provider) {
           <label for="service-package" class="block text-sm font-medium text-gray-700 mb-2">Select Service Package</label>
           <select id="service-package" class="w-full p-3 border border-gray-300 rounded-lg mb-6 focus:ring-blue-500 focus:border-blue-500">
             <option value="Visiting Charge - ${provider.price}">Visiting Charge - ₹${provider.price}</option>
-            <option value="Emergency Call - 80/flat">Emergency Call - ₹80 Flat</option>
+            <option value="Emergency Call - 50/flat">Emergency Call - ₹50 Flat</option>
           </select>
           <button onclick="startBooking(${provider.id}, document.getElementById('service-package').value)" class="w-full bg-blue-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-blue-700 transition duration-300 shadow-xl">
             Proceed to Book
@@ -718,7 +739,7 @@ async function renderBookingSystem() {
       `;
       break;
     case 3:
-      const visitingCharge = 80;
+      const visitingCharge = 50;
       const problemCharge = 00;
       const price = visitingCharge + problemCharge;
       const taxes = price * 0.18;
@@ -770,7 +791,7 @@ async function renderBookingSystem() {
           location: appState.currentBooking.location,
           instructions: appState.currentBooking.instructions,
           status: 'Confirmed',
-          price: 80,
+          price: 50,
           rating: null
         };
         await saveBooking(newBooking);
