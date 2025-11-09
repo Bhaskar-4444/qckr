@@ -1,4 +1,4 @@
-/* styles.css */
+/* styles.css (Updated: New hero background image - plumber at work) */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 body {
   font-family: 'Inter', sans-serif;
@@ -25,9 +25,9 @@ body {
 .gradient-bg {
   background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
 }
-/* New: Hero section background image similar to provided (cozy room with plants and chair) */
+/* Updated: Hero section background - plumber at work (related to services) */
 .hero-bg {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1558618047-3c8c98e4c89b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
