@@ -1,4 +1,4 @@
-<!-- index.html -->
+<!-- index.html (No changes needed from previous) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +17,7 @@
   <script src="https://www.gstatic.com/firebasejs/12.4.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/12.4.0/firebase-database-compat.js"></script>
   <script>
-    // Firebase Configuration
+    // Firebase Configuration (keep init here, but move listener to app.js)
     const firebaseConfig = {
       apiKey: "AIzaSyDbCpfja4Ly7kjNNNqy1L7i81CeAFtCDzU",
       authDomain: "oneserviice-d0270.firebaseapp.com",
@@ -38,29 +38,6 @@
     window.updateProfile = (user, profile) => user.updateProfile(profile);
     window.signOut = () => window.auth.signOut();
     window.signInAnonymously = () => window.auth.signInAnonymously();
-    // Auth State Listener
-    window.auth.onAuthStateChanged((user) => {
-      if (user) {
-        appState.isLoggedIn = true;
-        appState.user = {
-          uid: user.uid,
-          name: user.displayName || user.email.split('@')[0],
-          email: user.email,
-          role: 'customer'
-        };
-        console.log("User signed in:", appState.user);
-        if (appState.currentPage === 'login' || appState.currentPage === 'signup') {
-          navigateTo('dashboard');
-        }
-      } else {
-        appState.isLoggedIn = false;
-        appState.user = null;
-        console.log("User signed out");
-        if (appState.currentPage === 'dashboard') {
-          navigateTo('home');
-        }
-      }
-    });
   </script>
 </head>
 <body class="min-h-screen flex flex-col">
