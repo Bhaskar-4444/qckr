@@ -1,4 +1,4 @@
-/* app.js (Updated: Pricing to ₹50, removed search bar, updated policy text) */
+/* app.js (Updated: Pricing to ₹50, removed search bar, updated policy text, removed khan from reviews) */
 // Navigation History Stack for Back Button
 let navHistory = ['home']; // Initialize with home
 // Update history on navigation
@@ -54,7 +54,6 @@ let appState = {
   },
   user: null // Populated by Firebase Auth
 };
-
 // Auth State Listener (MOVED HERE: After appState, before other functions)
 window.auth.onAuthStateChanged((user) => {
   if (user) {
@@ -78,7 +77,6 @@ window.auth.onAuthStateChanged((user) => {
     }
   }
 });
-
 // --- Firebase Realtime Database Functions ---
 // Initialize Database with Sample Data (Run ONCE during setup)
 async function initializeDatabase() {
@@ -199,7 +197,7 @@ async function saveBooking(booking) {
 // Generate Mock Testimonials (used for mock data) - MOVED UP FOR HOISTING
 function generateMockTestimonials(count = 120) {
   const firstNames = ['Ravi', 'Priya', 'Amit', 'Neha', 'Suresh', 'Lata', 'Vikram', 'Meera', 'Rajesh', 'Sunita', 'Karan', 'Anita', 'Arjun', 'Deepa', 'Vikas', 'Shalini', 'Rahul', 'Pooja', 'Sanjay', 'Ritu'];
-  const lastNames = ['Kumar', 'Singh', 'Patel', 'Reddy', 'Menon', 'Desai', 'Joshi', 'Nair', 'Gupta', 'Bose', 'Malhotra', 'Sharma', 'Verma', 'Yadav', 'Chopra', 'Das', 'Roy', 'Mishra', 'Agarwal', 'Khan'];
+  const lastNames = ['Kumar', 'Singh', 'Patel', 'Reddy', 'Menon', 'Desai', 'Joshi', 'Nair', 'Gupta', 'Bose', 'Malhotra', 'Sharma', 'Verma', 'Yadav', 'Chopra', 'Das', 'Roy', 'Mishra', 'Agarwal', 'Raj'];
   const services = ['Appliance & Electrical Repair', 'Plumbing & Leaks', 'Deep House Cleaning', 'Pest Control', 'Carpentry & Assembly', 'Home Salon & Massage', 'AC Repair & Service', 'House Painting'];
   const locations = ['Rohini Sec-17, Delhi', 'Rohini Sec-18, Delhi', 'Rohini Sec-16, Delhi', 'Jor Bagh, Delhi', 'Shalimar Bagh, Delhi', 'Pitampura, Delhi', 'Model Town, Delhi', 'Sarita Vihar, Delhi', 'Saket, Delhi', 'Keshav Puram, Delhi', 'RK Puram, Delhi', 'Connaught Place, Delhi', 'South Extension, Delhi', 'Defence Colony, Delhi', 'Greater Kailash, Delhi', 'Vasant Kunj, Delhi', 'Dwarka, Delhi', 'Janakpuri, Delhi', 'Lajpat Nagar, Delhi', 'Karol Bagh, Delhi'];
   const textTemplates = [
@@ -439,7 +437,7 @@ function renderSignupPage() {
   return `
     <div class="max-w-md mx-auto bg-white p-8 rounded-xl shadow-2xl border border-gray-100 professional-card">
       <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Create Account</h2>
-      <p class="text-center text-gray-600 mb-8">Join OneServiice today</p>
+      <p class="text-center text-gray-600 mb-8">Join Fixees today</p>
       <div class="space-y-4">
         <div>
           <label for="signup-name" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
@@ -635,7 +633,7 @@ function renderProviderProfile(provider) {
           <h3 class="text-2xl font-bold mb-4 text-gray-800 border-b pb-2">About the Provider</h3>
           <p class="text-gray-700 leading-relaxed mb-4">${provider.bio} We are committed to punctuality, quality workmanship, and transparent pricing.</p>
           <h4 class="text-xl font-semibold mt-6 mb-3 text-gray-800">Services & Visiting Charge</h4>
-         
+        
           <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400">
             <ol class="text-sm text-blue-700 space-y-1 list-decimal list-inside ml-2">
               <li><strong>Fee: ₹50 for every service request.</strong><br>This covers the technician's visit, inspection, and basic consultation.</li>
@@ -644,23 +642,7 @@ function renderProviderProfile(provider) {
             </ol>
           </div>
         </div>
-        <div class="bg-white p-6 rounded-xl shadow-lg professional-card">
-          <h3 class="text-2xl font-bold mb-4 text-gray-800 border-b pb-2">Customer Reviews (${provider.reviews})</h3>
-          <div class="space-y-4">
-            ${mockReviews.map(r => `
-              <div class="border-b pb-4 last:border-b-0 fade-in">
-                <div class="flex justify-between items-center">
-                  <div class="font-bold text-gray-800">${r.user}</div>
-                  <div class="text-sm text-gray-500">${r.date}</div>
-                </div>
-                <div class="text-yellow-400 text-lg mb-2">${getRatingStars(r.rating)}</div>
-                <p class="text-gray-700">${r.text}</p>
-              </div>
-            `).join('')}
-          </div>
-          <button class="mt-4 text-blue-600 hover:underline font-medium">Read All ${provider.reviews} Reviews</button>
-        </div>
-      </div>
+     
       <div class="lg:col-span-1">
         <div class="sticky top-24 bg-white p-6 rounded-xl shadow-2xl border border-blue-200 professional-card">
           <h3 class="text-3xl font-extrabold text-blue-800 mb-4">Book ${provider.name}</h3>
@@ -668,7 +650,6 @@ function renderProviderProfile(provider) {
           <label for="service-package" class="block text-sm font-medium text-gray-700 mb-2">Select Service Package</label>
           <select id="service-package" class="w-full p-3 border border-gray-300 rounded-lg mb-6 focus:ring-blue-500 focus:border-blue-500">
             <option value="Visiting Charge - ${provider.price}">Visiting Charge - ₹${provider.price}</option>
-            <option value="Emergency Call - 50/flat">Emergency Call - ₹50 Flat</option>
           </select>
           <button onclick="startBooking(${provider.id}, document.getElementById('service-package').value)" class="w-full bg-blue-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-blue-700 transition duration-300 shadow-xl">
             Proceed to Book
@@ -856,10 +837,10 @@ function nextBookingStep() {
     const location = document.getElementById('booking-location').value;
     const instructions = document.getElementById('booking-instructions').value;
     if (!phone) return showModal('Input Required', 'Please enter your contact number.');
-    if (!/^\+91[6-9]\d{9}$/.test(phone.replace(/\s/g, ''))) return showModal('Invalid Phone', 'Please enter a valid Indian mobile number starting with +91.');
+    //if (!/^\[6-9]\d{9}$/.test(phone.replace(/\s/g, ''))) return showModal('Invalid Phone', 'Please enter a valid Indian mobile number starting with +91.');
     if (!location) return showModal('Input Required', 'Please enter the complete service address (including Pincode).');
     const pincodeMatch = location.match(/\b\d{6}\b/);
-    if (!pincodeMatch) return showModal('Invalid Location', 'Please include a valid 6-digit Indian pincode in the address.');
+    //if (!pincodeMatch) return showModal('Invalid Location', 'Please include a valid 6-digit Indian pincode in the address.');
     appState.currentBooking.phone = phone;
     appState.currentBooking.location = location;
     appState.currentBooking.instructions = instructions;
@@ -937,7 +918,7 @@ async function renderCustomerDashboard() {
           </ul>
         </div>
         <div class="bg-white p-6 rounded-xl shadow-md professional-card">
-          <h4 class="text-lg font-semibold mb-2">Why Choose OneServiice?</h4>
+          <h4 class="text-lg font-semibold mb-2">Fixees/h4>
           <p class="text-gray-600">100% vetted pros, no hidden fees, and easy rescheduling.</p>
         </div>
       </div>
@@ -990,13 +971,13 @@ function renderAboutPage() {
         <p class="text-xl text-gray-600">Simplifying home and personal services across the nation.</p>
       </header>
       <section class="bg-white p-8 rounded-xl shadow-2xl border-l-4 border-blue-600 professional-card">
-        <h3 class="text-3xl font-bold text-gray-800 mb-4">The OneServiice Vision</h3>
+        <h3 class="text-3xl font-bold text-gray-800 mb-4">The Fixees Vision</h3>
         <p class="text-gray-700 leading-relaxed mb-4">
-          We founded OneServiice to address the complexity of finding reliable, skilled, and fairly-priced local professionals in India. Our mission is to bridge the trust gap between customers and service providers.
+          We founded Fixees to address the complexity of finding reliable, skilled, and fairly-priced local professionals in India. Our mission is to bridge the trust gap between customers and service providers.
           From the bustling lanes of **Mumbai** to the tech hubs of **Bangalore** and the heritage cities of **Delhi**, we ensure that high-quality, trustworthy help is just a tap away. We are proud to support local Indian businesses and create opportunities for skilled individuals.
         </p>
         <p class="text-gray-700 leading-relaxed">
-          Our platform is built with the Indian user in mind—supporting regional languages, UPI payments, and hyper-local service matching. Join thousands of satisfied customers who have transformed their homes and lives with OneServiice.
+          Our platform is built with the Indian user in mind—supporting regional languages, UPI payments, and hyper-local service matching. Join thousands of satisfied customers who have transformed their homes and lives with Fixees.
         </p>
       </section>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
@@ -1047,7 +1028,7 @@ function renderAboutPage() {
 }
 function renderHowItWorksPage() {
   const steps = [
-    { icon: 'Search', title: 'Search & Select', detail: 'Enter your service need and Pincode. Browse profiles, check ratings, and select the professional that fits your requirements and budget.' },
+    { icon: 'Search', title: 'Search & Select', detail: 'Select the service you need from "Services" page. ' },
     { icon: 'Calendar', title: 'Schedule & Detail', detail: 'Choose your preferred date and time slot. Provide your exact service location and any specific instructions for the professional.' },
     { icon: 'Check', title: 'Confirm & Relax', detail: 'Review the total cost (in ₹), choose your payment method (UPI, Card, or COD), and confirm your booking. Your pro will arrive on time!' }
   ];
@@ -1057,7 +1038,7 @@ function renderHowItWorksPage() {
     </div>
     <div class="max-w-4xl mx-auto space-y-10">
       <header class="text-center">
-        <h2 class="text-5xl font-extrabold text-gray-800 mb-4">How OneServiice Works</h2>
+        <h2 class="text-5xl font-extrabold text-gray-800 mb-4">How Fixees Work</h2>
         <p class="text-xl text-gray-600">Booking home services has never been easier in India.</p>
       </header>
       <div class="relative flex flex-col items-center mb-12">
@@ -1080,27 +1061,7 @@ function renderHowItWorksPage() {
           </div>
         `).join('')}
       </div>
-      <section class="bg-gray-50 p-8 rounded-xl">
-        <h3 class="text-3xl font-bold text-gray-800 mb-6 text-center">Frequently Asked Questions</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h4 class="font-semibold mb-2">What if I need to cancel?</h4>
-            <p class="text-gray-600">Free cancellation up to 24 hours before. After that, a small fee applies.</p>
-          </div>
-          <div>
-            <h4 class="font-semibold mb-2">How do payments work?</h4>
-            <p class="text-gray-600">Secure UPI, card, or COD options. No upfront payment for COD.</p>
-          </div>
-          <div>
-            <h4 class="font-semibold mb-2">Are providers insured?</h4>
-            <p class="text-gray-600">Yes, all our pros carry insurance for your peace of mind.</p>
-          </div>
-          <div>
-            <h4 class="font-semibold mb-2">What cities do you serve?</h4>
-            <p class="text-gray-600">Over 50 cities including metros and Tier-2 towns.</p>
-          </div>
-        </div>
-      </section>
+     
       <div class="text-center pt-8">
         <button onclick="navigateTo('listings')" class="bg-green-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-700 transition duration-300 shadow-lg">
           Get Started Now!
@@ -1159,7 +1120,7 @@ function renderContactPage() {
     <div class="max-w-xl mx-auto space-y-8">
       <header class="text-center">
         <h2 class="text-4xl font-bold text-gray-800 mb-4">Contact Our Support Team</h2>
-        <p class="text-gray-600 mb-8">Fill out the form below or email us directly at support@oneserviice.in. We're here to help!</p>
+        <p class="text-gray-600 mb-8">Fill out the form below or email us directly at team.fixees@gmail.com. We're here to help!</p>
       </header>
       <div class="bg-white p-8 rounded-xl shadow-2xl border border-gray-100 professional-card">
         <form onsubmit="event.preventDefault(); showModal('Message Sent!', 'Thank you for reaching out. We will respond to your query within 24 hours.', () => {});">
