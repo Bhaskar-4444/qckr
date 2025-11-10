@@ -1,4 +1,4 @@
-/* app.js (Updated: Pricing to ₹50, removed search bar, updated policy text, removed khan from reviews) */
+/* app.js (Updated: Pricing to ₹50, removed search bar, updated policy text) */
 // Navigation History Stack for Back Button
 let navHistory = ['home']; // Initialize with home
 // Update history on navigation
@@ -54,6 +54,7 @@ let appState = {
   },
   user: null // Populated by Firebase Auth
 };
+
 // Auth State Listener (MOVED HERE: After appState, before other functions)
 window.auth.onAuthStateChanged((user) => {
   if (user) {
@@ -77,6 +78,7 @@ window.auth.onAuthStateChanged((user) => {
     }
   }
 });
+
 // --- Firebase Realtime Database Functions ---
 // Initialize Database with Sample Data (Run ONCE during setup)
 async function initializeDatabase() {
@@ -197,7 +199,7 @@ async function saveBooking(booking) {
 // Generate Mock Testimonials (used for mock data) - MOVED UP FOR HOISTING
 function generateMockTestimonials(count = 120) {
   const firstNames = ['Ravi', 'Priya', 'Amit', 'Neha', 'Suresh', 'Lata', 'Vikram', 'Meera', 'Rajesh', 'Sunita', 'Karan', 'Anita', 'Arjun', 'Deepa', 'Vikas', 'Shalini', 'Rahul', 'Pooja', 'Sanjay', 'Ritu'];
-  const lastNames = ['Kumar', 'Singh', 'Patel', 'Reddy', 'Menon', 'Desai', 'Joshi', 'Nair', 'Gupta', 'Bose', 'Malhotra', 'Sharma', 'Verma', 'Yadav', 'Chopra', 'Das', 'Roy', 'Mishra', 'Agarwal', 'Raj'];
+  const lastNames = ['Kumar', 'Singh', 'Patel', 'Reddy', 'Menon', 'Desai', 'Joshi', 'Nair', 'Gupta', 'Bose', 'Malhotra', 'Sharma', 'Verma', 'Yadav', 'Chopra', 'Das', 'Roy', 'Mishra', 'Agarwal','Raj'];
   const services = ['Appliance & Electrical Repair', 'Plumbing & Leaks', 'Deep House Cleaning', 'Pest Control', 'Carpentry & Assembly', 'Home Salon & Massage', 'AC Repair & Service', 'House Painting'];
   const locations = ['Rohini Sec-17, Delhi', 'Rohini Sec-18, Delhi', 'Rohini Sec-16, Delhi', 'Jor Bagh, Delhi', 'Shalimar Bagh, Delhi', 'Pitampura, Delhi', 'Model Town, Delhi', 'Sarita Vihar, Delhi', 'Saket, Delhi', 'Keshav Puram, Delhi', 'RK Puram, Delhi', 'Connaught Place, Delhi', 'South Extension, Delhi', 'Defence Colony, Delhi', 'Greater Kailash, Delhi', 'Vasant Kunj, Delhi', 'Dwarka, Delhi', 'Janakpuri, Delhi', 'Lajpat Nagar, Delhi', 'Karol Bagh, Delhi'];
   const textTemplates = [
@@ -633,7 +635,7 @@ function renderProviderProfile(provider) {
           <h3 class="text-2xl font-bold mb-4 text-gray-800 border-b pb-2">About the Provider</h3>
           <p class="text-gray-700 leading-relaxed mb-4">${provider.bio} We are committed to punctuality, quality workmanship, and transparent pricing.</p>
           <h4 class="text-xl font-semibold mt-6 mb-3 text-gray-800">Services & Visiting Charge</h4>
-        
+         
           <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400">
             <ol class="text-sm text-blue-700 space-y-1 list-decimal list-inside ml-2">
               <li><strong>Fee: ₹50 for every service request.</strong><br>This covers the technician's visit, inspection, and basic consultation.</li>
@@ -642,7 +644,7 @@ function renderProviderProfile(provider) {
             </ol>
           </div>
         </div>
-     
+      
       <div class="lg:col-span-1">
         <div class="sticky top-24 bg-white p-6 rounded-xl shadow-2xl border border-blue-200 professional-card">
           <h3 class="text-3xl font-extrabold text-blue-800 mb-4">Book ${provider.name}</h3>
@@ -693,8 +695,11 @@ async function renderBookingSystem() {
         <select id="booking-time" required class="w-full p-3 border border-gray-300 rounded-lg mb-6 focus:ring-blue-500 focus:border-blue-500">
           <option value="">-- Select a Time Slot --</option>
           <option value="9:00 AM">9:00 AM - 11:00 AM</option>
+          <option value="11:00 AM">11:00 AM - 1:00 PM</option>
           <option value="1:00 PM">1:00 PM - 3:00 PM</option>
           <option value="3:00 PM">3:00 PM - 5:00 PM</option>
+          <option value="5:00 PM">7:00 PM - 7:00 PM</option>
+          <option value="7:00 PM">3:00 PM - 9:00 PM</option>
         </select>
         <button onclick="nextBookingStep()" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition duration-300">Next: Location</button>
       `;
@@ -775,7 +780,7 @@ async function renderBookingSystem() {
           <div class="text-center p-8 bg-green-50 rounded-xl border border-green-300 professional-card">
             <div class="text-6xl text-green-600 mb-4">Success</div>
             <h4 class="text-3xl font-bold text-green-800 mb-4">Booking Confirmed!</h4>
-            <p class="text-gray-700 text-lg mb-6">You will receive an SMS and email confirmation shortly.</p>
+            <p class="text-gray-700 text-lg mb-6">You will receive a call shortly, if not then contact 8882648433</p>
             <p class="text-xl font-semibold mb-2">${newBooking.serviceName} with ${newBooking.providerName}</p>
             <p class="text-lg text-gray-600 mb-2">${newBooking.date} at ${newBooking.time}</p>
             <p class="text-lg text-gray-600 mb-2">Contact: ${newBooking.phone}</p>
@@ -878,7 +883,7 @@ async function renderCustomerDashboard() {
         <p class="text-2xl font-bold text-gray-800">₹${b.price.toFixed(2)}</p>
         ${b.status !== 'Completed' ? `
           <div class="flex space-x-2">
-            <button onclick="showModal('Cancel Booking', 'Are you sure you want to cancel booking #${b.id}? Cancellation fees (max ₹800) may apply.', () => console.log('Booking Cancelled'), true)" class="text-red-500 hover:text-red-700 text-sm font-medium">Cancel</button>
+            <button onclick="showModal('Cancel Booking', 'Are you sure you want to cancel booking #${b.id}? Cancellation fees may apply.', () => console.log('Booking Cancelled'), true)" class="text-red-500 hover:text-red-700 text-sm font-medium">Cancel</button>
             <button onclick="showModal('Reschedule Booking', 'Rescheduling booking #${b.id} requires provider approval.', () => {}, false)" class="text-blue-500 hover:text-blue-700 text-sm font-medium">Reschedule</button>
           </div>
         ` : (b.rating ? `
@@ -967,14 +972,14 @@ function renderAboutPage() {
     </div>
     <div class="max-w-4xl mx-auto space-y-12">
       <header class="text-center">
-        <h2 class="text-5xl font-extrabold text-gray-800 mb-4">Our Commitment to India</h2>
+        <h2 class="text-5xl font-extrabold text-gray-800 mb-4">Our Commitment to Customers</h2>
         <p class="text-xl text-gray-600">Simplifying home and personal services across the nation.</p>
       </header>
       <section class="bg-white p-8 rounded-xl shadow-2xl border-l-4 border-blue-600 professional-card">
         <h3 class="text-3xl font-bold text-gray-800 mb-4">The Fixees Vision</h3>
         <p class="text-gray-700 leading-relaxed mb-4">
           We founded Fixees to address the complexity of finding reliable, skilled, and fairly-priced local professionals in India. Our mission is to bridge the trust gap between customers and service providers.
-          From the bustling lanes of **Mumbai** to the tech hubs of **Bangalore** and the heritage cities of **Delhi**, we ensure that high-quality, trustworthy help is just a tap away. We are proud to support local Indian businesses and create opportunities for skilled individuals.
+          From the bustling lanes of Mumbai to the tech hubs of Bangalore and the heritage cities of Delhi, we ensure that high-quality, trustworthy help is just a tap away. We are proud to support local Indian businesses and create opportunities for skilled individuals.
         </p>
         <p class="text-gray-700 leading-relaxed">
           Our platform is built with the Indian user in mind—supporting regional languages, UPI payments, and hyper-local service matching. Join thousands of satisfied customers who have transformed their homes and lives with Fixees.
@@ -1061,7 +1066,7 @@ function renderHowItWorksPage() {
           </div>
         `).join('')}
       </div>
-     
+      
       <div class="text-center pt-8">
         <button onclick="navigateTo('listings')" class="bg-green-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-700 transition duration-300 shadow-lg">
           Get Started Now!
@@ -1072,15 +1077,23 @@ function renderHowItWorksPage() {
 }
 function renderFAQPage() {
   const faqs = [
-    { question: "How are providers vetted?", answer: "All providers undergo a background check, license verification, and continuous performance review based on customer ratings." },
-    { question: "What is the cancellation policy?", answer: "You can cancel free of charge up to 24 hours before the service time. Cancellations within 24 hours may incur a fee of up to ₹800." },
-    { question: "Is my payment secure?", answer: "Yes, all payments are processed through a secure, encrypted third-party gateway. We accept UPI, Card, and Netbanking payments for your convenience." },
-    { question: "Do I pay GST/Taxes?", answer: "Yes, standard GST is applied to all service charges, and this amount is clearly displayed during the Step 3: Review & Payment stage of the booking process." },
-    { question: "What if the service takes longer than expected?", answer: "For hourly services, the provider is obligated to inform you if additional time is required. Any extra payment will be based on the agreed-upon hourly rate shown on their profile." },
-    { question: "Can I request a female provider?", answer: "Yes, where available, you can specify preferences like gender during the booking process." },
-    { question: "What happens if the provider is late?", answer: "We guarantee on-time arrival or offer a discount. Track your pro in real-time via the app." },
-    { question: "How do I rate a service?", answer: "After completion, you'll receive a prompt to rate and review the provider in your dashboard." },
-  ];
+  { question: "How are professionals vetted?", answer: "All professionals undergo a background check, work qualification, and continuous performance review based on customer ratings." },
+  { question: "What is the cancellation policy?", answer: "You can cancel free of cost up to 30 minutes of booking. If you cancel after that, the 50rs visiting fee will be charged." },
+  { question: "Is my payment secure?", answer: "Yes, all payments are secure. Pay via UPI, Card, or Netbanking payments after the completion of service." },
+  { question: "What if the service takes longer than expected?", answer: "For hourly services, the provider is obligated to inform you if additional time is required. Any extra payment will be based on the agreed-upon hourly rate shown on their profile." },
+  { question: "Can I request a female professional?", answer: "Yes, in service categories like home salon we have female professionals." },
+  { question: "What happens if the provider is late?", answer: "We guarantee on-time arrival." },
+  { question: "How do I rate a service?", answer: "After completion, you'll receive a prompt to rate and review the provider on google." },
+  { question: "What areas do you cover?", answer: "Currently we are providing services in Delhi NCR. We will expand in other states soon." },
+  { question: "How do I book a service?", answer: "Browse services on the home page, select a category, pick date/time, enter details, and confirm payment." },
+  { question: "What is the visiting charge?", answer: "A flat ₹50 visiting charge applies for inspection and consultation. It's fully adjusted if you proceed with the full service." },
+  { question: "Can I book for someone else?", answer: "Yes, simply enter the recipient's contact and address details during the booking process." },
+  { question: "What if I'm not satisfied with the service?", answer: "Contact our support team within 24 hours of service completion for a review and potential resolution or refund." },
+  { question: "Do providers carry tools and materials?", answer: "Yes, all verified providers come equipped with necessary tools. For materials, confirm specifics with the provider before booking." },
+  { question: "Is there a warranty on services?", answer: "Warranties vary by service type (e.g., 30 days for repairs)." },
+  { question: "How soon can I get a service?", answer: "Most services are available same-day or within few hours in urban areas." },
+  { question: "Can I change the booking time?", answer: "Yes, reschedule via your dashboard up to 2 hours before the slot, you can reschedule via calling this no. 8882648433." }
+];
   return `
     <div class="flex items-center mb-6">
       <button onclick="goBack()" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg font-semibold hover:bg-gray-400 transition duration-300 mr-4">← Back</button>
