@@ -635,13 +635,8 @@ function renderProviderProfile(provider) {
           <h3 class="text-2xl font-bold mb-4 text-gray-800 border-b pb-2">About the Provider</h3>
           <p class="text-gray-700 leading-relaxed mb-4">${provider.bio} We are committed to punctuality, quality workmanship, and transparent pricing.</p>
           <h4 class="text-xl font-semibold mt-6 mb-3 text-gray-800">Services & Visiting Charge</h4>
-          <ul class="list-disc list-inside space-y-2 text-gray-700 mb-4">
-            <li><strong>Visiting Charge:</strong> ₹${provider.price} + problem based charge</li>
-            <li><strong>Major Installation:</strong> Custom Quote (Contact for estimate)</li>
-            <li><strong>Emergency Call-out:</strong> ₹50 flat fee + problem based charge</li>
-          </ul>
+         
           <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400">
-            <h5 class="font-semibold text-blue-800 mb-2">Visiting Charge Policy</h5>
             <ol class="text-sm text-blue-700 space-y-1 list-decimal list-inside ml-2">
               <li><strong>Fee: ₹50 for every service request.</strong><br>This covers the technician's visit, inspection, and basic consultation.</li>
               <li><strong>If You Proceed:</strong><br>The ₹50 is fully adjusted in your final bill—no extra charge.</li>
