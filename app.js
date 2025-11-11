@@ -1133,7 +1133,7 @@ function renderContactPage() {
     <div class="max-w-xl mx-auto space-y-8">
       <header class="text-center">
         <h2 class="text-4xl font-bold text-gray-800 mb-4">Contact Our Support Team</h2>
-        <p class="text-gray-600 mb-8">Fill out the form below or email us directly at team.fixees@gmail.com. We're here to help!</p>
+        <p class="text-gray-600 mb-8">Fill out the form below or email us directly at team.fixease@gmail.com. We're here to help!</p>
       </header>
       <div class="bg-white p-8 rounded-xl shadow-2xl border border-gray-100 professional-card">
         <form onsubmit="event.preventDefault(); showModal('Message Sent!', 'Thank you for reaching out. We will respond to your query within 24 hours.', () => {});">
