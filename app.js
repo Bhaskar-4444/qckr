@@ -439,7 +439,7 @@ function renderSignupPage() {
   return `
     <div class="max-w-md mx-auto bg-white p-8 rounded-xl shadow-2xl border border-gray-100 professional-card">
       <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Create Account</h2>
-      <p class="text-center text-gray-600 mb-8">Join Fixees today</p>
+      <p class="text-center text-gray-600 mb-8">Join FixEase today</p>
       <div class="space-y-4">
         <div>
           <label for="signup-name" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
@@ -923,7 +923,7 @@ async function renderCustomerDashboard() {
           </ul>
         </div>
         <div class="bg-white p-6 rounded-xl shadow-md professional-card">
-          <h4 class="text-lg font-semibold mb-2">Fixees/h4>
+          <h4 class="text-lg font-semibold mb-2">FixEase/h4>
           <p class="text-gray-600">100% vetted pros, no hidden fees, and easy rescheduling.</p>
         </div>
       </div>
@@ -976,13 +976,13 @@ function renderAboutPage() {
         <p class="text-xl text-gray-600">Simplifying home and personal services across the nation.</p>
       </header>
       <section class="bg-white p-8 rounded-xl shadow-2xl border-l-4 border-blue-600 professional-card">
-        <h3 class="text-3xl font-bold text-gray-800 mb-4">The Fixees Vision</h3>
+        <h3 class="text-3xl font-bold text-gray-800 mb-4">The FixEase Vision</h3>
         <p class="text-gray-700 leading-relaxed mb-4">
-          We founded Fixees to address the complexity of finding reliable, skilled, and fairly-priced local professionals in India. Our mission is to bridge the trust gap between customers and service providers.
+          We founded FixEase to address the complexity of finding reliable, skilled, and fairly-priced local professionals in India. Our mission is to bridge the trust gap between customers and service providers.
           From the bustling lanes of Mumbai to the tech hubs of Bangalore and the heritage cities of Delhi, we ensure that high-quality, trustworthy help is just a tap away. We are proud to support local Indian businesses and create opportunities for skilled individuals.
         </p>
         <p class="text-gray-700 leading-relaxed">
-          Our platform is built with the Indian user in mind—supporting regional languages, UPI payments, and hyper-local service matching. Join thousands of satisfied customers who have transformed their homes and lives with Fixees.
+          Our platform is built with the Indian user in mind—supporting regional languages, UPI payments, and hyper-local service matching. Join thousands of satisfied customers who have transformed their homes and lives with FixEase.
         </p>
       </section>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
@@ -1043,7 +1043,7 @@ function renderHowItWorksPage() {
     </div>
     <div class="max-w-4xl mx-auto space-y-10">
       <header class="text-center">
-        <h2 class="text-5xl font-extrabold text-gray-800 mb-4">How Fixees Work</h2>
+        <h2 class="text-5xl font-extrabold text-gray-800 mb-4">How FixEase Work</h2>
         <p class="text-xl text-gray-600">Booking home services has never been easier in India.</p>
       </header>
       <div class="relative flex flex-col items-center mb-12">
